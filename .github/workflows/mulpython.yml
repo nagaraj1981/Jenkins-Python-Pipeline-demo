@@ -1,0 +1,43 @@
+name: build Python application
+on: # multiple triggers when this workflow can run
+ workflow_dispatch:  # manually run code
+ push:
+   branches:
+     - master
+ pull_request:
+   branches:
+     - master
+env:
+  PYTHON_VERSION_NEW: 3.12
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    env:
+      PYTHON_VERSION: 3.11
+    steps:
+    - name: Clone the repo
+      uses: actions/checkout@v6
+    - name: Install Python on ${{ env.PYTHON_VERSION }} runner
+      uses: actions/setup-python@v6
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    - name: Install pythona dependencies
+      run: |
+       pip install --upgrade pip
+       pip install -r requirements.txt
+  job2:
+    runs-on: ubuntu-latest
+    env:
+      PYTHON_VERSION: 3.9
+    steps:
+    - name: Clone the repo
+      uses: actions/checkout@v6
+    - name: Install Python on ${{ env.PYTHON_VERSION }} runner
+      uses: actions/setup-python@v6
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    - name: Install python dependencies
+      run: |
+       pip install --upgrade pip
+       pip install -r requirements.txt
+
